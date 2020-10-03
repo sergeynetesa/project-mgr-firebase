@@ -1,0 +1,84 @@
+<ng-container *ngIf="currentUser$ | async as u"></ng-container>
+<ng-container *ngIf="curProjectFromRoute$ | async"></ng-container>
+<!-- <ng-container *ngIf="curTaskArray$ | async"></ng-container> -->
+<form (ngSubmit)="onProjectSubmit(projectFG)" [formGroup]="projectFG">
+  <mat-card class="project-card">
+    <mat-card-header>
+      <mat-card-title>{{form_title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline" floatLabel="auto">
+            <input  matInput 
+                    placeholder="Input/edit project title"
+                    formControlName="project_title"
+                    required
+            >
+            <mat-label>Title</mat-label> 
+            <mat-icon matPrefix>title</mat-icon> 
+            <mat-error *ngIf="project_title?.hasError('required')">
+              ERROR: Title is required
+            </mat-error>        
+            <mat-error *ngIf="project_title?.hasError('minlength')">
+              ERROR: min Title length is {{project_title?.getError('minlength').requiredLength}}
+            </mat-error>   
+            <mat-error *ngIf="project_title?.hasError('maxlength')">
+              ERROR: max Title length is {{project_title?.getError('maxlength').requiredLength}}
+            </mat-error>                                                   
+          </mat-form-field>
+        </div>
+      </div> 
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline" floatLabel="auto">
+            <textarea  matInput
+                    [matTextareaAutosize]="true"
+                    [matAutosizeMinRows]="2"
+                    [matAutosizeMaxRows]="5"
+                    placeholder="Input/edit project description"
+                    formControlName="project_desc"
+                    required
+                    rows="3"
+            ></textarea>
+            <mat-label>Description</mat-label> 
+            <mat-icon matPrefix>description</mat-icon> 
+            <mat-error *ngIf="project_desc?.hasError('required')">
+              ERROR: Description is required
+            </mat-error>
+            <mat-error *ngIf="project_desc?.hasError('minlength')">              
+              ERROR: min Description length is {{project_desc?.getError('minlength').requiredLength}}              
+            </mat-error>
+            <mat-error *ngIf="project_desc?.hasError('maxlength')">              
+              ERROR: max aTitle length is {{project_desc?.getError('maxlength').requiredLength}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+      <mat-card-actions align="end">
+        <!-- <ng-container *ngIf='isProjectsChanged$ | async as r'> -->
+        <button mat-flat-button color="primary" 
+                [disabled]="projectFG.invalid"
+                >
+                {{form_btn_title}}
+        </button>
+        <div class='spinner-container' *ngIf="false">
+          <mat-spinner diameter="30"></mat-spinner>
+        </div>
+        <span class="nav-spacer"></span>
+        <button mat-stroked-button *ngIf="project_state !== 'ADD'"
+                (click)="deleteProjectWithConfirm()"
+                color="accent" 
+                [disabled]=""
+                type="button"                                       
+        >
+          DELETE PROJECT
+        </button>
+        <!-- </ng-container> -->
+      </mat-card-actions>
+  </mat-card>
+</form>
+<div>
+  <router-outlet></router-outlet>
+</div>

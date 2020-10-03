@@ -1,0 +1,134 @@
+<ng-container *ngIf="currentUser$ | async as u"></ng-container>
+<ng-container *ngIf="isUserChanged$ | async as r">
+<mat-tab-group>
+  <mat-tab>
+    <ng-template mat-tab-label>
+        <h2>LogIn</h2>
+    </ng-template>
+    <form (ngSubmit)="onLoginSubmit(loginFG)" [formGroup]="loginFG">
+      <mat-card class="loging-card">
+        <mat-card-header>
+          <mat-card-title>Login Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width" appearance="outline" floatLabel="auto">
+                <input  matInput 
+                        type="email"
+                        placeholder="Input your email"
+                        formControlName="login_email"
+                        required
+                        #email_login                        
+                >
+                <mat-label>User email</mat-label> 
+                <mat-icon matPrefix>email</mat-icon> 
+                <mat-error *ngIf="login_email?.hasError('required')">
+                  ERROR: Email is required
+                </mat-error>
+                <mat-error *ngIf="login_email?.hasError('email')">
+                  ERROR: Valid Email is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width" appearance="outline" floatLabel="auto">
+                <input  matInput 
+                        placeholder="Input your password"
+                        formControlName="login_name"
+                        required
+                        #name_login                        
+                >
+                <mat-label>User password</mat-label> 
+                <mat-icon matPrefix>lock</mat-icon> 
+                  <mat-error *ngIf="isLoginNameInvalid && login_name?.hasError('required')">
+                    ERROR: User name is required
+                  </mat-error>
+                  <mat-error *ngIf="isLoginNameInvalid && login_name?.hasError('userNameValid')">
+                    ERROR: {{login_name?.getError('userNameValid').message}}
+                  </mat-error>
+              </mat-form-field>
+            </div>
+          </div>          
+        </mat-card-content>
+          <mat-card-actions>
+            <button mat-flat-button color="primary" 
+                    [disabled]="loginFG.invalid || (!r.isEnd && r.op === 'LOGIN')"
+                    >
+                    Submit
+            </button>
+            <div class='spinner-container' 
+                  *ngIf="(!r.isEnd && r.op === 'LOGIN')">              
+              <mat-spinner diameter="30"></mat-spinner>              
+            </div>            
+          </mat-card-actions>
+        </mat-card>
+    </form>     
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+        <h2>SignUp</h2>
+    </ng-template>
+    <form (ngSubmit)="onSignupSubmit(userFG)" [formGroup]="userFG">
+      <mat-card class="loging-card">
+        <mat-card-header>
+          <mat-card-title>Signup Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content> 
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width" appearance="outline" floatLabel="auto">
+                <input  matInput 
+                        type="email"
+                        placeholder="Input your email"
+                        formControlName="signup_email"
+                        required
+                >
+                <mat-label>User email</mat-label> 
+                <mat-icon matPrefix>email</mat-icon> 
+                <mat-error *ngIf="signup_email?.hasError('required')">
+                  ERROR: Email is required
+                </mat-error>
+                <mat-error *ngIf="signup_email?.hasError('email')">
+                  ERROR: Valid Email is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width" appearance="outline" floatLabel="auto">
+                <input  matInput 
+                        placeholder="Input your password"
+                        formControlName="signup_name"
+                        required
+                >
+                <mat-label>User password</mat-label> 
+                <mat-icon matPrefix>lock</mat-icon> 
+                <mat-error *ngIf="signup_name?.hasError('required')">
+                  ERROR: User password is required
+                </mat-error>
+                <mat-error *ngIf="signup_name?.hasError('userNameValid')">
+                  ERROR: {{signup_name?.getError('userNameValid').message}}
+                </mat-error>                     
+              </mat-form-field>
+            </div>
+          </div>          
+          </mat-card-content>
+          <mat-card-actions>              
+              <button mat-flat-button color="primary" 
+                      [disabled]="userFG.invalid || (!r.isEnd && r.op === 'SIGNUP')">
+                      Submit
+              </button>
+              <div class='spinner-container' 
+                    *ngIf="(!r.isEnd && r.op === 'SIGNUP')">              
+                <mat-spinner [diameter]="30" [strokeWidth]="3"></mat-spinner>
+              </div>              
+          </mat-card-actions>
+      </mat-card>
+    </form>
+  </mat-tab>
+</mat-tab-group>
+</ng-container>

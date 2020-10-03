@@ -1,0 +1,66 @@
+<ng-container *ngIf="isSmallScreen$ | async as isSmallScreen">
+    <mat-sidenav-container fullscreen>
+      <mat-sidenav [fixedInViewport]="true"
+                  class="page-list-sidenav"
+                  #pageSidenav>
+        <mat-toolbar color="accent">Menu</mat-toolbar>
+        <mat-nav-list>
+          <a mat-list-item
+            *ngFor="let item of leftRouteArr"
+            [routerLink]="item.path"
+            routerLinkActive="active-page">
+            {{ item.title }}
+          </a>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <mat-toolbar color="primary">
+          <button mat-icon-button 
+                  matTooltip="Open menu" 
+                  (click)="pageSidenav.toggle()">
+              <mat-icon>menu</mat-icon>
+          </button>
+          <ng-container *ngIf="header$ | async as header">
+              <span class="page-title">{{ header.title }}</span>
+          </ng-container>
+          <span class="nav-spacer"></span>
+          <ng-container *ngIf="(currentUser$ | async) as curUser">            
+              <span class="page-email" *ngIf="!isSmallScreen.matches" >{{ curUser?.email }}</span>        
+              <!-- <mat-icon class="nav-icon">account_circle</mat-icon> -->
+              <button mat-button class="topnav-icon" (click)="logout()">
+                <mat-icon aria-hidden="false" aria-label="Logout">exit_to_app</mat-icon>
+                Logout
+              </button>
+              <!-- 
+                <button mat-button *ngIf="isSmallScreen.matches" 
+                      class="topnav-icon" (click)="logout()">
+                <mat-icon aria-hidden="false" aria-label="Logout">exit_to_app</mat-icon>    
+              </button>
+              -->            
+          </ng-container>
+          <a mat-button *ngIf="isSmallScreen.matches" target="_blank"
+              href="https://github.com/sergeynetesa/project-mgr-firebase"
+              aria-label="GitHub Repository">
+            <img class="docs-github-logo"
+              src="../assets/img/homepage/github-circle-white-transparent.svg"
+              alt="angular">
+          </a>
+          <a mat-button *ngIf="!isSmallScreen.matches" target="_blank"
+            href="https://github.com/sergeynetesa/project-mgr-firebase"
+            aria-label="GitHub Repository">
+            <img class="docs-angular-logo"
+                  src="../assets/img/homepage/github-circle-white-transparent.svg"
+                  alt="angular">
+            GitHub
+          </a> 
+        </mat-toolbar>
+        <div class="mat-typography page-wrapper">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+    <ng-template *ngIf="!isSmallScreen">
+      Loading stuff...
+    </ng-template>
+  </ng-container>
+

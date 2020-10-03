@@ -1,0 +1,90 @@
+<ng-container *ngIf="currentUser$ | async"></ng-container>
+<ng-container *ngIf="curProjectFromRoute$ | async"></ng-container>
+<ng-container *ngIf="curTaskFromRoute$ | async"></ng-container>
+
+<form *ngIf="isProjectTaskSubscribe" (ngSubmit)="onTaskSubmit(taskFG)" [formGroup]="taskFG">
+  <mat-card class="task-card">
+    <mat-card-header>
+      <mat-card-title>{{form_title}}</mat-card-title>
+      <mat-card-subtitle>{{formSubtitle}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline" floatLabel="auto">
+            <input  matInput 
+                    placeholder="Input/edit Task title"
+                    formControlName="task_title"
+                    required
+            >
+            <mat-label>Title</mat-label> 
+            <mat-icon matPrefix>title</mat-icon> 
+            <mat-error *ngIf="task_title?.hasError('required')">
+              ERROR: Title is required
+            </mat-error>        
+            <mat-error *ngIf="task_title?.hasError('minlength')">
+              <!-- ERROR: {{task_title?.getError('minlength').message}} -->
+              ERROR: min Title length is {{task_title?.getError('minlength').requiredLength}}
+            </mat-error>   
+            <mat-error *ngIf="task_title?.hasError('maxlength')">
+              <!-- ERROR: {{task_title?.getError('maxlength').message}} -->
+              ERROR: max Title length is {{task_title?.getError('maxlength').requiredLength}}
+            </mat-error>                                                   
+          </mat-form-field>
+        </div>
+      </div> 
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline" floatLabel="auto">
+            <textarea  matInput
+                    [matTextareaAutosize]="true"
+                    [matAutosizeMinRows]="2"
+                    [matAutosizeMaxRows]="5"
+                    placeholder="Input/edit Task description"
+                    formControlName="task_desc"
+                    required
+                    rows="3"
+            ></textarea>
+            <mat-label>Description</mat-label> 
+            <mat-icon matPrefix>description</mat-icon> 
+            <mat-error *ngIf="task_desc?.hasError('required')">
+              ERROR: Description is required
+            </mat-error>
+            <mat-error *ngIf="task_desc?.hasError('minlength')">              
+              ERROR: min Description length is {{task_desc?.getError('minlength').requiredLength}}              
+            </mat-error>
+            <mat-error *ngIf="task_desc?.hasError('maxlength')">              
+              ERROR: max aTitle length is {{task_desc?.getError('maxlength').requiredLength}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col">
+              <mat-checkbox formControlName="task_done">IS TASK DONE?</mat-checkbox>
+          </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <!-- <ng-container *ngIf="(isTaskChanged$ | async) as r"> -->
+      <button mat-flat-button color="primary" 
+              [disabled]="taskFG.invalid"
+              >
+              {{form_btn_title}}
+      </button>
+      <div class='spinner-container' *ngIf="false">
+        <mat-spinner diameter="30"></mat-spinner>
+      </div>
+      <span class="nav-spacer"></span>
+      <button mat-stroked-button *ngIf="task_state !== 'ADD'"
+              (click)="deleteTaskWithConfirm()"
+              color="accent" 
+              [disabled]=""
+              type="button"                                       
+      >
+        DELETE TASK
+      </button>
+      <!-- </ng-container>       -->
+    </mat-card-actions>
+  </mat-card>
+</form>

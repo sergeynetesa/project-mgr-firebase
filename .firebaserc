@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "auth-project-1aa72": {
+      "hosting": {
+        "ngfire-auth": [
+          "auth-project-1aa72"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "auth-project-1aa72"
+  }
+}

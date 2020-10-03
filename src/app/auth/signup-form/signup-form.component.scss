@@ -1,0 +1,50 @@
+  .full-width {
+    width: 100%;
+  }
+  
+  .loging-card {
+    min-width: 120px;
+    margin: 20px auto;
+  }
+  
+  .mat-radio-button {
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .col {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .col:last-child {
+    margin-right: 0;
+  }
+  
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}
+.mat-card-actions .mat-flat-button {
+  margin-left: 10px;
+}
+.spinner-container {
+  position: relative;
+} 
+.spinner-container mat-spinner {
+  position: absolute;
+  top: -33px;
+  left: 100px; 
+  /* margin: 0 0 10px 10px; */
+} 
+h2.ng-star-inserted {
+  margin-bottom: 9px;
+}
+textarea.mat-input-element {
+  resize: none;
+}

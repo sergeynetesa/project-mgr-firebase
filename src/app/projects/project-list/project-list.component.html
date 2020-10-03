@@ -1,0 +1,43 @@
+<ng-container *ngIf="routerEvents$ | async"></ng-container>
+<ng-container *ngIf="(currentUser$ | async) as ut">
+  <!-- <pre>userID: {{ ut ? ut.uid : "NULL"}}</pre> -->
+    <mat-card class="card">
+      <mat-card-title-group>
+        <mat-card-title>{{ut?.email}} Projects</mat-card-title>
+        <!-- <button mat-mini-fab color="primary" (click)="reloadPage()">
+          <mat-icon>cached</mat-icon>
+        </button> -->
+        <button mat-mini-fab color="primary" (click)="addProject()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-card-title-group>
+      <mat-card-content>
+      <ng-container *ngIf="(currentProjects$ | async) as projects; else prj_load">
+        <!-- <pre>userID: {{ JSON_safeStringify(projects)}}</pre> -->
+        <mat-nav-list>
+          <mat-list-item *ngFor="let project of projects" (click)="editProject(project)">
+          <a mat-line [routerLink]="'/projects/'+ project.project_id + '/tasks'"
+                      routerLinkActive="active"
+          > 
+            <span >{{ project.title }}</span>
+          </a>
+          <button mat-icon-button (click)="editProject(project)">
+            <mat-icon >edit</mat-icon>
+          </button>
+          </mat-list-item>
+          <mat-list-item *ngIf="projects.length === 0">
+            <span >User has no Projects!</span>
+          </mat-list-item>
+        </mat-nav-list>
+      </ng-container>  
+      
+      <ng-template #prj_load>
+        <div class="spinner-container">          
+          <span>LOADING USER PROJECTS</span>
+          <mat-spinner diameter="30"></mat-spinner>
+        </div>
+      </ng-template>      
+      
+      </mat-card-content>
+    </mat-card>
+  </ng-container>

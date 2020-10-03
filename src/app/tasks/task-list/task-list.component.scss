@@ -1,0 +1,37 @@
+.spinner-container mat-spinner {
+    margin: 0 0 10px 10px;
+  }
+  .spacer {
+    flex: 1 1 auto;
+  }
+  .card {
+    min-width: 120px;
+    margin: 20px auto;
+  }
+  .full-width {
+    width: 100%;
+  }
+
+  .mat-radio-button {
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .col {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .col:last-child {
+    margin-right: 0;
+  }
+
+  mat-button-toggle-group.mat-button-toggle-group[name="taskFilterType"] {
+    font-size: 16px;
+  }
+  

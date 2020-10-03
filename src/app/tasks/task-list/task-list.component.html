@@ -1,0 +1,53 @@
+<ng-container *ngIf="currentUser$ | async"></ng-container>
+<!-- <ng-container *ngIf="currentProject$ | async"></ng-container> -->
+<ng-container *ngIf="curTasksFromRoute$ | async"></ng-container> 
+<mat-card class="card">
+  <mat-card-title-group *ngIf="(activeTaskFilterType$ | async) as activeFilterType">
+    <mat-card-title>Tasks: 
+      <mat-button-toggle-group [value]="activeFilterType"
+                                (change)="activateFilterType($event)" 
+                                name="taskFilterType" aria-label="Task Filter Type">
+        <mat-button-toggle value="all">ALL</mat-button-toggle>
+        <mat-button-toggle value="open">OPEN</mat-button-toggle>
+        <mat-button-toggle value="done">DONE</mat-button-toggle>
+      </mat-button-toggle-group> 
+    </mat-card-title>
+    <button mat-mini-fab color="primary" (click)="addTask()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-title-group>
+  <mat-card-content>
+  <ng-container *ngIf="(filteredTasks$ | async) as tasks; else task_load">
+    <mat-nav-list>
+      <mat-list-item *ngFor="let task of tasks" (click)="editTask(task)">
+      <a mat-line [routerLink]="'/projects/'+ currentProjectId + '/tasks/'+ task.task_id"
+                  routerLinkActive="active"
+      >
+        <ng-container *ngIf="task.done; then check; else uncheck"></ng-container>
+        <ng-template #check>
+          <mat-icon mat-list-icon>star</mat-icon>
+        </ng-template>
+        <ng-template #uncheck>
+          <mat-icon mat-list-icon>star_border</mat-icon>
+        </ng-template>
+        <span >{{ task.title }}</span>
+      </a>
+      <button mat-icon-button>
+        <mat-icon (click)="editTask(task)">edit</mat-icon>
+      </button>
+      </mat-list-item>
+      <mat-list-item *ngIf="tasks.length === 0">
+        <span >Selected Project has no Tasks!</span>
+      </mat-list-item>
+    </mat-nav-list>
+  </ng-container>
+  
+  <ng-template #task_load>
+    <div class="spinner-container">          
+      <span>LOADING PROJECT TASKS</span>
+      <mat-spinner diameter="30"></mat-spinner>
+    </div>
+  </ng-template>
+
+  </mat-card-content>
+</mat-card>

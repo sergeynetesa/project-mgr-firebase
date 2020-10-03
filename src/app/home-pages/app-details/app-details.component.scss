@@ -1,0 +1,55 @@
+.full-width {
+    width: 100%;
+  }
+  
+  .loging-card {
+    min-width: 120px;
+    margin: 20px auto;
+  }
+  
+  .mat-radio-button {
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .col {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .col:last-child {
+    margin-right: 0;
+  }
+
+  .mat-card-header .mat-card-title {
+    font-size: 24px;
+  }
+  .mat-card-content {
+    margin: 0 16px;
+  }
+  div.col-first {
+    margin: 10px 0;
+  }
+  ul.card-content {
+    margin-block-start: 0;
+  }
+  .mat-form-field {
+    font-size: 16px;
+  }
+  .nav-spacer {
+    flex: 1 1 auto;
+  }
+  .spinner-container {
+    position: relative;
+  } 
+  .spinner-container mat-spinner {
+    position: absolute;
+    top: -1px;
+    left: 50px;     
+  }
+  
